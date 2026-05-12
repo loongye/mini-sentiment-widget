@@ -11,10 +11,12 @@ function SummaryPanel() {
         <p>Total submissions: {sentiments.length}</p>
         <p>
           Average rating:{" "}
-          {Number(
-            sentiments.reduce((acc, cur) => acc + cur.rating, 0) /
-              sentiments.length,
-          ).toFixed(1)}
+          {sentiments.length === 0
+            ? "0.0"
+            : Number(
+                sentiments.reduce((acc, cur) => acc + cur.rating, 0) /
+                  sentiments.length,
+              ).toFixed(1)}
         </p>
       </div>
       <Separator />

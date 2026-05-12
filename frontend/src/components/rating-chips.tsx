@@ -12,6 +12,7 @@ function RatingChips({ value, onChange, error }: IRatingChipsProps) {
       <FieldLabel htmlFor="rating">Rating</FieldLabel>
       <ToggleGroup
         id="rating"
+        aria-label="Rating"
         type="single"
         size="lg"
         spacing={2}
