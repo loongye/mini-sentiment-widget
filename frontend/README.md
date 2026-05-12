@@ -1,73 +1,56 @@
-# React + TypeScript + Vite
+# Mini Sentiment Widget
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sleek and functional React application that allows users to rate their experience and provide textual feedback. This widget includes persistent tracking of submissions and displays a rolling summary.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Rating Selector**: Select numeric feedback values instantly.
+- **Comment Support**: Capture text context alongside user ratings.
+- **Submission Cooldown**: Prevents spam by temporarily disabling inputs for 3 seconds after successfully submitting.
+- **Persistent Storage**: Sentiments are securely stored in LocalStorage, surviving browser restarts.
+- **Live Summary**: Instantly see total submission count, aggregated average scores, and the 3 latest text comments.
+- **Light & Dark Mode**: Integrated native support for dynamic themes.
+- **Validation and Error Management**: Forms prevent blank submissions without direct user action.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Component Library**: [Shadcn UI](https://ui.shadcn.com/) & [Radix UI](https://www.radix-ui.com/)
+- **Testing**: [Vitest Browser Mode](https://vitest.dev/guide/browser/) with Playwright
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Install project dependencies:
+   ```bash
+   npm install
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+2. Start the local development server:
+   ```bash
+   npm run dev
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Create optimized production build:
+   ```bash
+   npm run build
+   ```
+
+### 🧪 Running Tests
+
+This project employs robust **browser-based tests** using Vitest and Playwright to guarantee reliability directly in a realistic headless/headed browser environment.
+
+Run frontend integration and unit tests via:
+```bash
+npm run test:browser
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🧹 Linting
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Ensure static analysis and coding styles stay clean:
+```bash
+npm run lint
 ```
