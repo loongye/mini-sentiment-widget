@@ -1,5 +1,6 @@
 import { expect, test, beforeEach } from 'vitest';
 import { render } from 'vitest-browser-react';
+import '@/index.css';
 import App from '@/App';
 
 beforeEach(() => {
