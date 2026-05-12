@@ -83,3 +83,49 @@ test('re-enables the form after 3 seconds following a submission', async () => {
 
   vi.useRealTimers();
 });
+
+test('manages summary correctly when 5 items are submitted iteratively', async () => {
+  vi.useFakeTimers();
+  const screen = await render(<App />);
+  
+  // Input helper mapping
+  const submissions = [
+    { rating: '1', comment: 'Comment One' },
+    { rating: '2', comment: 'Comment Two' },
+    { rating: '3', comment: 'Comment Three' },
+    { rating: '4', comment: 'Comment Four' },
+    { rating: '5', comment: 'Comment Five' },
+  ];
+
+  for (const entry of submissions) {
+    // Select the specific rating chip
+    await screen.getByRole('radio', { name: entry.rating }).click();
+    // Enter the corresponding comment
+    await screen.getByRole('textbox', { name: /comment/i }).fill(entry.comment);
+    // Submit form
+    await screen.getByRole('button', { name: /submit/i }).click();
+    
+    // Close resulting confirmation dialog
+    await screen.getByRole('button', { name: 'Close' }).first().click();
+    
+    // Fast forward past the 3 second cooling period to re-enable inputs for next iteration
+    await vi.advanceTimersByTimeAsync(3000);
+  }
+
+  // Check total count
+  await expect.element(screen.getByText('Total submissions: 5')).toBeInTheDocument();
+  
+  // Check calculated average: (1+2+3+4+5) / 5 = 3.0
+  await expect.element(screen.getByText('Average rating: 3.0')).toBeInTheDocument();
+
+  // Verify only latest 3 comments are visible
+  await expect.element(screen.getByText('"Comment Five"')).toBeInTheDocument();
+  await expect.element(screen.getByText('"Comment Four"')).toBeInTheDocument();
+  await expect.element(screen.getByText('"Comment Three"')).toBeInTheDocument();
+
+  // Verify oldest comments are hidden from current UI view
+  await expect.element(screen.getByText('"Comment Two"')).not.toBeInTheDocument();
+  await expect.element(screen.getByText('"Comment One"')).not.toBeInTheDocument();
+
+  vi.useRealTimers();
+});
